@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="text/javascript" src="app.js" defer></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #262626;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      max-width: 800px;
+      width: 100%;
+    }
+
+    .card {
+      width: 220px;
+      height: 280px;
+      background: rgb(38, 38, 38);
+      box-shadow: 7px 5px 10px rgba(0, 0, 0, 0.333);
+      border-radius: 10px;
+      overflow: hidden;
+      text-align: center;
+      padding: 15px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .imge {
+      height: 80px;
+      background-color: #ff5858;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5px;
+    }
+
+    .imge .Usericon {
+      background-color: #414141;
+      width: 55px;
+      height: 55px;
+      border-radius: 10px;
+    }
+
+    .UserName {
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    .Role {
+      color: #ff5858;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .Description {
+      background-color: #414141;
+      padding: 10px;
+      border-radius: 5px;
+      color: #ddd;
+      font-size: 14px;
+      height: 90px;
+      overflow: hidden;
+    }
+
+    .social-media {
+      margin-top: 10px;
+    }
+
+    .social-media a {
+      text-decoration: none;
+      margin: 0 8px;
+      color: #ff5858;
+      font-size: 18px;
+      transition: color 0.3s;
+    }
+
+    .social-media a:hover {
+      color: #ff3030;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Card 1 -->
+    <div class="card">
+      <div class="imge">
+        <div class="Usericon"></div>
+      </div>
+      <p class="UserName">John Doe</p>
+      <p class="Role">CEO, Tech Solutions</p>
+      <div class="Description">
+        Driving innovation in the tech industry through cutting-edge solutions.
+      </div>
+      <div class="social-media">
+        <a href="#">🔗</a>
+        <a href="#">📘</a>
+        <a href="#">🐦</a>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+      <div class="imge">
+        <div class="Usericon"></div>
+      </div>
+      <p class="UserName">Sarah Lee</p>
+      <p class="Role">Marketing Director</p>
+      <div class="Description">
+        Strategizing brand growth and driving customer engagement.
+      </div>
+      <div class="social-media">
+        <a href="#">🔗</a>
+        <a href="#">📘</a>
+        <a href="#">🐦</a>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card">
+      <div class="imge">
+        <div class="Usericon"></div>
+      </div>
+      <p class="UserName">Michael Smith</p>
+      <p class="Role">Finance Manager</p>
+      <div class="Description">
+        Managing company finances to ensure growth and stability.
+      </div>
+      <div class="social-media">
+        <a href="#">🔗</a>
+        <a href="#">📘</a>
+        <a href="#">🐦</a>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card">
+      <div class="imge">
+        <div class="Usericon"></div>
+      </div>
+      <p class="UserName">Emily Brown</p>
+      <p class="Role">HR Manager</p>
+      <div class="Description">
+        Recruiting and developing top talent to drive success.
+      </div>
+      <div class="social-media">
+        <a href="#">🔗</a>
+        <a href="#">📘</a>
+        <a href="#">🐦</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

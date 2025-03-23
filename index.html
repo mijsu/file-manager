@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="app.js" defer></script>
+    <style>
+/* 🌟 General Styles */
+body {
+    background: linear-gradient(135deg, #3A3D98, #121212);
+    color: #e8eaed;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+/* 🌟 Sidebar */
+.sidebar {
+    width: 250px; /* Set sidebar width */
+    background: #1e1e2e;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000; /* Ensure it stays above other elements */
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Sidebar hidden state */
+.sidebar.hidden {
+    transform: translateX(-100%);
+}
+
+/* 🌟 Main Content Adjustments */
+main {
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 250px; /* Adjust to match sidebar width */
+    transition: margin-left 0.3s ease-in-out;
+}
+
+/* When sidebar is hidden */
+.sidebar.hidden + main {
+    margin-left: 0;
+}
+
+/* 🌟 Main Content Layout (2x2 Grid) */
+/* 🌟 Main Content Layout (Centered 2x2 Grid) */
+.dashboard-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(250px, 1fr)); /* 2x2 Grid */
+    gap: 20px;
+    max-width: 1500px; /* Adjusted width for better centering */
+    width: 100%; /* Ensures it doesn't exceed the screen width */
+    margin: 0 auto; /* Centers the container */
+    justify-content: center; /* Ensures grid items stay centered */
+}
+
+/* 🌟 Card Styling */
+.card {
+    background: #1e1e2e;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
+    min-width: 650px;
+    min-height: 450px;
+    justify-self: center; /* Ensures cards align to the center */
+}
+
+/* Apply the negative margin only on desktop screens */
+@media (min-width: 1025px) {
+    .card {
+        margin-left: -200px;
+    }
+}
+
+/* 🌟 Mobile Adjustments (Removes Negative Margin) */
+@media (max-width: 1024px) {
+    .dashboard-container {
+        grid-template-columns: 1fr; /* Stack items in 1 column */
+        max-width: 100%; /* Allow full screen width */
+        padding: 10px;
+    }
+
+    .card {
+        margin-left: 0; /* Removes the offset for mobile */
+        min-width: unset; /* Allow it to be flexible */
+        width: 100%; /* Ensures it fits mobile screens */
+    }
+}
+
+
+.card:hover {
+    transform: scale(1.02);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+.card h3 {
+    margin: 0;
+    color: #4A90E2;
+}
+
+.card-content {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.file-list {
+    list-style: none;
+    padding: 0;
+}
+
+.file-list li {
+    padding: 8px 0;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.file-list li:hover {
+    color: #4A90E2;
+}
+
+/* 🌟 Project List */
+.project-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    text-align: center;
+}
+
+.project-item {
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.project-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.project-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.project-item p {
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.project-item img {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+}
+
+/* 🌟 Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+/* 🌟 General Modal Content */
+.modal-content {
+    background: #1e1e2e;
+    padding: 20px;
+    border-radius: 10px;
+    width: 60%;
+    max-width: 800px;
+    text-align: center;
+}
+
+.close-btn {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* 🌟 PDF Modal Specific Styles */
+#pdf-modal .modal-content {
+    width: 90%;
+    max-width: 600px;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#pdf-viewer {
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+/* 🌟 Mobile Adjustments */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        transform: translateX(-100%);
+    }
+
+    .sidebar.hidden {
+        transform: translateX(0);
+    }
+
+    main {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .dashboard-container {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-bottom: 80px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 100%;
+        min-width: unset;
+        min-height: auto;
+        padding: 15px;
+    }
+
+    .modal-content {
+        width: 90%;
+        padding: 15px;
+    }
+
+    /* Ensure PDF Viewer Fits Mobile */
+    #pdf-modal .modal-content {
+        width: 100%;
+        height: 90vh;
+    }
+
+    #pdf-viewer {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+/* 🌟 Make Images Responsive */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+</style>
+</head>
+<body>
+  <body>
+    <nav id="sidebar">
+      <ul>
+        <li>
+          <span class="logo">CUTTINGDAWGZ</span>
+          <button onclick=toggleSidebar() id="toggle-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z"/></svg>
+          </button>
+        </li>
+        <li class="active">
+          <a href="index.html">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M240-200h120v-200q0-17 11.5-28.5T400-440h160q17 0 28.5 11.5T600-400v200h120v-360L480-740 240-560v360Zm-80 0v-360q0-19 8.5-36t23.5-28l240-180q21-16 48-16t48 16l240 180q15 11 23.5 28t8.5 36v360q0 33-23.5 56.5T720-120H560q-17 0-28.5-11.5T520-160v-200h-80v200q0 17-11.5 28.5T400-120H240q-33 0-56.5-23.5T160-200Zm320-270Z"/></svg>
+            <span>Home</span>
+          </a>
+        </li>
+        <li>
+          <a href="dashboard.html">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M520-640v-160q0-17 11.5-28.5T560-840h240q17 0 28.5 11.5T840-800v160q0 17-11.5 28.5T800-600H560q-17 0-28.5-11.5T520-640ZM120-480v-320q0-17 11.5-28.5T160-840h240q17 0 28.5 11.5T440-800v320q0 17-11.5 28.5T400-440H160q-17 0-28.5-11.5T120-480Zm400 320v-320q0-17 11.5-28.5T560-520h240q17 0 28.5 11.5T840-480v320q0 17-11.5 28.5T800-120H560q-17 0-28.5-11.5T520-160Zm-400 0v-160q0-17 11.5-28.5T160-360h240q17 0 28.5 11.5T440-320v160q0 17-11.5 28.5T400-120H160q-17 0-28.5-11.5T120-160Zm80-360h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z"/></svg>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <button onclick=toggleSubMenu(this) class="dropdown-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h207q16 0 30.5 6t25.5 17l57 57h320q33 0 56.5 23.5T880-640v400q0 33-23.5 56.5T800-160H160Zm0-80h640v-400H447l-80-80H160v480Zm0 0v-480 480Zm400-160v40q0 17 11.5 28.5T600-320q17 0 28.5-11.5T640-360v-40h40q17 0 28.5-11.5T720-440q0-17-11.5-28.5T680-480h-40v-40q0-17-11.5-28.5T600-560q-17 0-28.5 11.5T560-520v40h-40q-17 0-28.5 11.5T480-440q0 17 11.5 28.5T520-400h40Z"/></svg>
+            <span>Create</span>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z"/></svg>
+          </button>
+          <ul class="sub-menu">
+            <div>
+              <li><a href="folders.html">Folder</a></li>
+              <li><a href="#">Document</a></li>
+              <li><a href="#">Project</a></li>
+            </div>
+          </ul>
+        </li>
+        <li>
+          <button onclick=toggleSubMenu(this) class="dropdown-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m221-313 142-142q12-12 28-11.5t28 12.5q11 12 11 28t-11 28L250-228q-12 12-28 12t-28-12l-86-86q-11-11-11-28t11-28q11-11 28-11t28 11l57 57Zm0-320 142-142q12-12 28-11.5t28 12.5q11 12 11 28t-11 28L250-548q-12 12-28 12t-28-12l-86-86q-11-11-11-28t11-28q11-11 28-11t28 11l57 57Zm339 353q-17 0-28.5-11.5T520-320q0-17 11.5-28.5T560-360h280q17 0 28.5 11.5T880-320q0 17-11.5 28.5T840-280H560Zm0-320q-17 0-28.5-11.5T520-640q0-17 11.5-28.5T560-680h280q17 0 28.5 11.5T880-640q0 17-11.5 28.5T840-600H560Z"/></svg>
+            <span>Todo-Lists</span>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-361q-8 0-15-2.5t-13-8.5L268-556q-11-11-11-28t11-28q11-11 28-11t28 11l156 156 156-156q11-11 28-11t28 11q11 11 11 28t-11 28L508-372q-6 6-13 8.5t-15 2.5Z"/></svg>
+          </button>
+          <ul class="sub-menu">
+            <div>
+              <li><a href="#">Work</a></li>
+              <li><a href="#">Private</a></li>
+              <li><a href="#">Coding</a></li>
+              <li><a href="#">Gardening</a></li>
+              <li><a href="#">School</a></li>
+            </div>
+          </ul>
+        </li>
+        <li>
+          <a href="calendar.html">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-40q0-17 11.5-28.5T280-880q17 0 28.5 11.5T320-840v40h320v-40q0-17 11.5-28.5T680-880q17 0 28.5 11.5T720-840v40h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Zm280 240q-17 0-28.5-11.5T440-440q0-17 11.5-28.5T480-480q17 0 28.5 11.5T520-440q0 17-11.5 28.5T480-400Zm-160 0q-17 0-28.5-11.5T280-440q0-17 11.5-28.5T320-480q17 0 28.5 11.5T360-440q0 17-11.5 28.5T320-400Zm320 0q-17 0-28.5-11.5T600-440q0-17 11.5-28.5T640-480q17 0 28.5 11.5T680-440q0 17-11.5 28.5T640-400ZM480-240q-17 0-28.5-11.5T440-280q0-17 11.5-28.5T480-320q17 0 28.5 11.5T520-280q0 17-11.5 28.5T480-240Zm-160 0q-17 0-28.5-11.5T280-280q0-17 11.5-28.5T320-320q17 0 28.5 11.5T360-280q0 17-11.5 28.5T320-240Zm320 0q-17 0-28.5-11.5T600-280q0-17 11.5-28.5T640-320q17 0 28.5 11.5T680-280q0 17-11.5 28.5T640-240Z"/></svg>
+            <span>Calendar</span>
+          </a>
+        </li>
+        <li>
+          <a href="profile.html">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-240v-32q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v32q0 33-23.5 56.5T720-160H240q-33 0-56.5-23.5T160-240Zm80 0h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"/></svg>
+            <span>Profile</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <main>
+    <div class="dashboard-container">
+        
+    <!-- Recent Files -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Recent</h3>
+            <button class="expand-btn">↔</button>
+        </div>
+        <div class="card-content">
+            <ul class="file-list">
+                <li onclick="openModal('Recent File 1')">📄 arnoldbernas_sched - 2/20/25 9:49 PM</li>
+                <li onclick="openModal('Recent File 2')">📄 arnoldbernas_file - 2/20/25 9:49 PM</li>
+                <li onclick="openModal('Recent File 3')">📄 arnoldbernas_project - 2/20/25 9:49 PM</li>
+            </ul>
+        </div>
+    </div>
+
+<!-- Calendar -->
+<div class="card">
+  <div class="card-header">
+      <h3>Calendar</h3>
+      <button class="expand-btn">↔</button>
+  </div>
+  <div class="card-content">
+      <p>Feb 23, Monday</p>
+      <p onclick="openModal('SE 101', 'Software Engineering 101 class with Prof. Smith. Topics: Agile Development.')">
+          SE 101 Subject - 7:30 AM - 12:30 PM
+      </p>
+      <p onclick="openModal('SDF Subject', 'Software Development Fundamentals. Topics: JavaScript Basics.')">
+          SDF Subject - 1:00 PM - 5:30 PM
+      </p>
+  </div>
+</div>
+
+   
+
+      <!-- Documents Section -->
+      <div class="card">
+          <div class="card-header">
+              <h3>Documents</h3>
+              <button class="expand-btn">↔</button>
+          </div>
+          <div class="card-content">
+            <ul>
+                <li onclick="openPDF('se_presentation.pdf', event)">📄 SE Presentation.pdf - 2/24/25</li>
+                <li onclick="openPDF('research_paper.pdf', event)">📄 Research Paper.pdf - 2/22/25</li>
+            </ul>
+        </div>
+    </div>
+
+<!-- Projects Section -->
+<div class="card">
+  <div class="card-header">
+      <h3>Projects</h3>
+  </div>
+  <div class="card-content">
+      <div class="project-list">
+          <div class="project-item" onclick="openProjectModal('Flowchart', 'flowchart.webp', ['Step-by-step diagram', 'Visualizes process flow', 'Used in project planning'])">
+              <img src="flowchart.webp" alt="Flowchart">
+              <p>Flowchart</p>
+          </div>
+
+          <div class="project-item" onclick="openProjectModal('Data Flow Diagram', 'dfd.png', ['Represents system data flow', 'Helps in database structuring', 'Essential for software analysis'])">
+              <img src="dfd.png" alt="DFD">
+              <p>Data Flow Diagram</p>
+          </div>
+
+          <div class="project-item" onclick="openProjectModal('Gantt Chart', 'gantt_chart.png', ['Used for project scheduling', 'Shows dependencies between tasks', 'Widely used in project management'])">
+              <img src="gantt_chart.png" alt="Gantt Chart">
+              <p>Gantt Chart</p>
+          </div>
+
+          <div class="project-item" onclick="openProjectModal('ER Diagram', 'er_diagram.webp', ['Illustrates database relationships', 'Defines entities and their attributes', 'Used in database design'])">
+              <img src="er_diagram.webp" alt="ER Diagram">
+              <p>ER Diagram</p>
+          </div>
+      </div>
+  </div>
+</div>
+
+</main>
+
+<!-- General Modal -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <h2 id="modal-title"></h2>
+      <p id="modal-text-content"></p>
+  </div>
+</div>
+
+
+<!-- Project Modal -->
+<div id="project-modal" class="modal">
+  <div class="modal-content">
+      <span class="close-btn" onclick="closeProjectModal()">&times;</span>
+      <h2 id="project-modal-title"></h2>
+      <img id="project-modal-image" src="" alt="Project Image" style="max-width: 100%; border-radius: 10px; margin: 15px 0;">
+      <ul id="project-modal-details" style="text-align: left; list-style: disc; padding-left: 20px;"></ul>
+  </div>
+</div>
+
+
+<!-- PDF Modal -->
+<div id="pdf-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closePDFModal()">&times;</span>
+        <h2 id="pdf-modal-title">Document Viewer</h2>
+        <iframe id="pdf-viewer" src="" frameborder="0"></iframe>
+    </div>
+</div>
+
+<script>
+  // Open Project Modal with Image and Details
+function openProjectModal(title, imgSrc, details) {
+    document.getElementById("project-modal").style.display = "flex";
+    document.getElementById("project-modal-title").innerText = title;
+    document.getElementById("project-modal-image").src = imgSrc;
+
+    let detailsList = document.getElementById("project-modal-details");
+    detailsList.innerHTML = ""; // Clear previous details
+
+    details.forEach(detail => {
+        let li = document.createElement("li");
+        li.textContent = detail;
+        detailsList.appendChild(li);
+    });
+}
+
+
+// Close Project Modal
+function closeProjectModal() {
+    document.getElementById("project-modal").style.display = "none";
+}
+
+// Open Modal with Additional Information
+function openModal(title, details) {
+    document.getElementById("modal").style.display = "flex";
+    document.getElementById("modal-title").innerText = title;
+    document.getElementById("modal-text-content").innerText = details;
+}
+
+// Close Modal
+function closeModal() {
+    document.getElementById("modal").style.display = "none";
+}
+
+// Open PDF in Modal
+function openPDF(pdfUrl, event) {
+    event.preventDefault(); 
+    let modifiedUrl = pdfUrl + "#toolbar=0&navpanes=0&scrollbar=1&view=FitH";
+
+    if (event.ctrlKey || event.metaKey) {
+        window.open(modifiedUrl, "_blank");
+    } else {
+        document.getElementById("pdf-modal").style.display = "flex";
+        document.getElementById("pdf-viewer").src = modifiedUrl;
+    }
+}
+
+// Close PDF Modal
+function closePDFModal() {
+    let pdfModal = document.getElementById("pdf-modal");
+    let pdfViewer = document.getElementById("pdf-viewer");
+
+    pdfModal.style.display = "none";
+    pdfViewer.src = "";
+}
+
+// Close modals when clicking outside
+window.onclick = function(event) {
+    if (event.target === document.getElementById("pdf-modal")) closePDFModal();
+    if (event.target === document.getElementById("modal")) closeModal();
+    if (event.target === document.getElementById("project-modal")) closeProjectModal();
+};
+</script>
+
+</body>
+</html>
