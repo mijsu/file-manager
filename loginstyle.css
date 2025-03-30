@@ -93,6 +93,16 @@
     animation: btn-anim1 1.5s linear infinite;
   }
   
+  .messageDiv {
+    background-color: blue;
+    color: #fff;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    opacity: 0;
+    animation:fadeOut 5s forwards;
+  }
   @keyframes btn-anim1 {
     0% {
       left: -100%;

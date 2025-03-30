@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="loginstyle.css">
+  <script type="module" src="signup.js" defer>
+    
+  </script>
 </head>
 <style>
   body {
@@ -16,15 +19,16 @@
 <div class="login-box">
   <p>Login</p>
   <form>
+    <div id="signInMessage" class="messageDiv" style="display: none;"></div>
     <div class="user-box">
-      <input required="" name="" type="text">
+      <input name="email" type="text" id="email1" required>
       <label>Email</label>
     </div>
     <div class="user-box">
-      <input required="" name="" type="password">
+      <input name="password" type="password" id="password1" required>
       <label>Password</label>
     </div>
-    <a href="#">
+    <a id="submitSignIn" href="#" type="signin">
       <span></span>
       <span></span>
       <span></span>
