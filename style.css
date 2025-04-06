@@ -33,6 +33,7 @@ body {
 main {
   padding: 30px;
   position: relative;
+  min-height: 100px;
 }
 
 h1 {
@@ -467,7 +468,7 @@ main p {
   }
 
   main {
-    padding: 2em 1em 60px 1em;
+    padding: 2em 1em 60px 1em; /* Add padding-bottom for space below sidebar */
   }
 
   .container {
@@ -484,6 +485,7 @@ main p {
     position: fixed;
     top: unset;
     bottom: 0;
+    z-index: 1000; /* Ensure it stays on top */
   }
 
   #sidebar > ul {
