@@ -150,9 +150,10 @@
         <!-- Folders will be listed here -->
     </div>
 </main>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <script>
-let folders = [];
+
 let selectedFolder = null;  // Store the currently selected folder
 let pressTimer = null; // Timer to detect long press
 
@@ -429,6 +430,76 @@ window.addEventListener('click', function(event) {
         closeDecryptionModal();
     }
 });
+
+
+
+
+
+
+const folderContainer = document.getElementById("folder-container");
+
+// Predefined list of folder names
+const folderNames = [
+    "Documents",
+    "Photos",
+    "Music",
+    "Videos",
+    "School Files",
+    "Work Projects",
+    "Backup",
+    "Personal"
+];
+
+// Dummy folder data
+const folders = folderNames.map((name, index) => ({
+    id: index + 1,  // Unique id for each folder
+    name: name,
+    encrypted: false  // Simulating encryption status (false by default)
+}));
+
+// Create a folder element with icon
+function createFakeFolder(folder) {
+    const folderDiv = document.createElement("div");
+    folderDiv.className = "folder";
+    folderDiv.innerHTML = `
+        <i class="fas fa-folder" style="margin-right: 8px; color: #f4c542;"></i> 
+        <span>${folder.name}</span>
+    `;
+    folderDiv.onclick = () => openFolderActionModal(folder.id);
+    folderContainer.appendChild(folderDiv);
+}
+
+// Generate folders using the fixed names and folder data
+function generateFixedFolders() {
+    folders.forEach(folder => {
+        createFakeFolder(folder);
+    });
+}
+
+// Open Folder Action Modal (Rename, Delete, Share, Encrypt/Decrypt)
+function openFolderActionModal(id) {
+    const folder = folders.find(f => f.id === id);
+    selectedFolder = folder.id;
+
+    // Toggle visibility based on folder encryption status
+    document.getElementById("rename-btn").style.display = folder.encrypted ? "none" : "inline-block";
+    document.getElementById("delete-btn").style.display = folder.encrypted ? "none" : "inline-block";
+    document.getElementById("share-btn").style.display = folder.encrypted ? "none" : "inline-block";
+    document.getElementById("encrypt-btn").textContent = folder.encrypted ? "Decrypt" : "Encrypt";
+
+    // Show the folder action modal
+    document.getElementById("folder-action-modal").style.display = "flex";
+    console.log("Opening action modal for:", folder.name);
+}
+
+// Call this on page load to populate the fixed folders
+window.onload = () => {
+    generateFixedFolders();
+};
+
+
+
+
 </script>
 
 
