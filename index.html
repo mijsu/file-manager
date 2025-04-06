@@ -3,173 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com/3.0.12"></script>
     <script type="text/javascript" src="app.js" defer></script>
     <style>
-/* 🌟 General Styles */
-body {
-    background: linear-gradient(135deg, #3A3D98, #121212);
-    color: #e8eaed;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
 
-/* 🌟 Sidebar */
-.sidebar {
-    width: 250px; /* Set sidebar width */
-    background: #1e1e2e;
-    height: 100vh;
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 1000; /* Ensure it stays above other elements */
-    transition: transform 0.3s ease-in-out;
-}
-
-/* Sidebar hidden state */
-.sidebar.hidden {
-    transform: translateX(-100%);
-}
-
-/* 🌟 Main Content Adjustments */
-main {
-    flex-grow: 1;
-    padding: 20px;
-    margin-left: 250px; /* Adjust to match sidebar width */
-    transition: margin-left 0.3s ease-in-out;
-}
-
-/* When sidebar is hidden */
-.sidebar.hidden + main {
-    margin-left: 0;
-}
-
-/* 🌟 Main Content Layout (2x2 Grid) */
-/* 🌟 Main Content Layout (Centered 2x2 Grid) */
-.dashboard-container {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(250px, 1fr)); /* 2x2 Grid */
-    gap: 20px;
-    max-width: 1500px; /* Adjusted width for better centering */
-    width: 100%; /* Ensures it doesn't exceed the screen width */
-    margin: 0 auto; /* Centers the container */
-    justify-content: center; /* Ensures grid items stay centered */
-}
-
-/* 🌟 Card Styling */
-.card {
-    background: #1e1e2e;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
-    transition: transform 0.2s ease;
-    min-width: 650px;
-    min-height: 450px;
-    justify-self: center; /* Ensures cards align to the center */
-}
-
-/* Apply the negative margin only on desktop screens */
-@media (min-width: 1025px) {
-    .card {
-        margin-left: -200px;
-    }
-}
-
-/* 🌟 Mobile Adjustments (Removes Negative Margin) */
-@media (max-width: 1024px) {
-    .dashboard-container {
-        grid-template-columns: 1fr; /* Stack items in 1 column */
-        max-width: 100%; /* Allow full screen width */
-        padding: 10px;
-    }
-
-    .card {
-        margin-left: 0; /* Removes the offset for mobile */
-        min-width: unset; /* Allow it to be flexible */
-        width: 100%; /* Ensures it fits mobile screens */
-    }
-}
-
-
-.card:hover {
-    transform: scale(1.02);
-}
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #333;
-    padding-bottom: 10px;
-}
-
-.card h3 {
-    margin: 0;
-    color: #4A90E2;
-}
-
-.card-content {
-    margin-top: 10px;
-    margin-left: 10px;
-}
-
-.file-list {
-    list-style: none;
-    padding: 0;
-}
-
-.file-list li {
-    padding: 8px 0;
-    cursor: pointer;
-    transition: color 0.2s ease;
-}
-
-.file-list li:hover {
-    color: #4A90E2;
-}
-
-/* 🌟 Project List */
-.project-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 15px;
-    text-align: center;
-}
-
-.project-item {
-    background: #fff;
-    border-radius: 10px;
-    padding: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-}
-
-.project-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.project-item img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-}
-
-.project-item p {
-    font-weight: bold;
-    margin-top: 8px;
-}
-
-.project-item img {
-    width: 100px;
-    height: 100px;
-    border-radius: 8px;
-}
 
 /* 🌟 Modal Styling */
 .modal {
@@ -277,7 +117,7 @@ img {
     <nav id="sidebar">
       <ul>
         <li>
-          <span class="logo">CUTTINGDAWGZ</span>
+          <span class="logo">ANDROID CUSTODIO</span>
           <button onclick=toggleSidebar() id="toggle-btn">
             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z"/></svg>
           </button>
@@ -316,11 +156,7 @@ img {
           </button>
           <ul class="sub-menu">
             <div>
-              <li><a href="#">Work</a></li>
-              <li><a href="#">Private</a></li>
-              <li><a href="#">Coding</a></li>
-              <li><a href="#">Gardening</a></li>
-              <li><a href="#">School</a></li>
+                <li><a href="todolist.html">Schedule</a></li>
             </div>
           </ul>
         </li>
@@ -338,88 +174,105 @@ img {
         </li>
       </ul>
     </nav>
-    <main>
-    <div class="dashboard-container">
-        
-    <!-- Recent Files -->
-    <div class="card">
-        <div class="card-header">
-            <h3>Recent</h3>
-            <button class="expand-btn">↔</button>
-        </div>
-        <div class="card-content">
-            <ul class="file-list">
-                <li onclick="openModal('Recent File 1')">📄 arnoldbernas_sched - 2/20/25 9:49 PM</li>
-                <li onclick="openModal('Recent File 2')">📄 arnoldbernas_file - 2/20/25 9:49 PM</li>
-                <li onclick="openModal('Recent File 3')">📄 arnoldbernas_project - 2/20/25 9:49 PM</li>
-            </ul>
-        </div>
-    </div>
+    <main class="flex-grow p-6 space-y-6 h-screen overflow-auto lg:overflow-hidden mb-16 lg:mb-0">
 
+
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+    
+            <!-- Recent Files -->
+            <div class="bg-gray-800 shadow-lg rounded-lg p-6 flex-1 overflow-y-auto max-h-[calc(100vh-150px)]">
+                <div class="flex justify-between items-center border-b pb-4">
+                    <h3 class="text-lg font-semibold text-blue-400">Recent</h3>
+                    <button class="text-gray-400">↔</button>
+                </div>
+                <div class="mt-4">
+                    <ul class="space-y-2">
+                        <li class="cursor-pointer hover:text-blue-400 px-2 py-1 rounded" onclick="openModal('Recent File 1')">📄 arnoldbernas_sched - 2/20/25 9:49 PM</li>
+                        <li class="cursor-pointer hover:text-blue-400 px-2 py-1 rounded" onclick="openModal('Recent File 2')">📄 arnoldbernas_file - 2/20/25 9:49 PM</li>
+                        <li class="cursor-pointer hover:text-blue-400 px-2 py-1 rounded" onclick="openModal('Recent File 3')">📄 arnoldbernas_project - 2/20/25 9:49 PM</li>
+                    </ul>
+                </div>
+            </div>
+    
 <!-- Calendar -->
-<div class="card">
-  <div class="card-header">
-      <h3>Calendar</h3>
-      <button class="expand-btn">↔</button>
-  </div>
-  <div class="card-content">
-      <p>Feb 23, Monday</p>
-      <p onclick="openModal('SE 101', 'Software Engineering 101 class with Prof. Smith. Topics: Agile Development.')">
-          SE 101 Subject - 7:30 AM - 12:30 PM
-      </p>
-      <p onclick="openModal('SDF Subject', 'Software Development Fundamentals. Topics: JavaScript Basics.')">
-          SDF Subject - 1:00 PM - 5:30 PM
-      </p>
-  </div>
-</div>
-
-   
-
-      <!-- Documents Section -->
-      <div class="card">
-          <div class="card-header">
-              <h3>Documents</h3>
-              <button class="expand-btn">↔</button>
-          </div>
-          <div class="card-content">
-            <ul>
-                <li onclick="openPDF('se_presentation.pdf', event)">📄 SE Presentation.pdf - 2/24/25</li>
-                <li onclick="openPDF('research_paper.pdf', event)">📄 Research Paper.pdf - 2/22/25</li>
-            </ul>
-        </div>
+<div class="bg-gray-800 shadow-lg rounded-lg p-6 flex-1 overflow-y-auto max-h-[calc(100vh-150px)]">
+    <div class="flex justify-between items-center border-b pb-4">
+        <h3 class="text-lg font-semibold text-blue-400">Business Schedule</h3>
+        <button class="text-gray-400">↔</button>
     </div>
+    <div class="mt-4 space-y-2">
+        <p class="text-white">April 8, Tuesday</p>
 
-<!-- Projects Section -->
-<div class="card">
-  <div class="card-header">
-      <h3>Projects</h3>
-  </div>
-  <div class="card-content">
-      <div class="project-list">
-          <div class="project-item" onclick="openProjectModal('Flowchart', 'flowchart.webp', ['Step-by-step diagram', 'Visualizes process flow', 'Used in project planning'])">
-              <img src="flowchart.webp" alt="Flowchart">
-              <p>Flowchart</p>
-          </div>
+        <p class="cursor-pointer text-blue-400 hover:underline"
+        onclick="openModal('Team Meeting', 'Daily stand-up to discuss progress.', './images/graph1.png')">
+        🕘 9:00 AM - 9:30 AM | Stand-up Meeting
+     </p>
+     
 
-          <div class="project-item" onclick="openProjectModal('Data Flow Diagram', 'dfd.png', ['Represents system data flow', 'Helps in database structuring', 'Essential for software analysis'])">
-              <img src="dfd.png" alt="DFD">
-              <p>Data Flow Diagram</p>
-          </div>
+        <p class="cursor-pointer text-blue-400 hover:underline"
+           onclick="openModal('Business Strategy', 'SWOT analysis and planning.', '')">
+           📘 9:30 AM - 11:30 AM | Business Strategy
+        </p>
 
-          <div class="project-item" onclick="openProjectModal('Gantt Chart', 'gantt_chart.png', ['Used for project scheduling', 'Shows dependencies between tasks', 'Widely used in project management'])">
-              <img src="gantt_chart.png" alt="Gantt Chart">
-              <p>Gantt Chart</p>
-          </div>
+        <p class="cursor-pointer text-blue-400 hover:underline"
+           onclick="openModal('Marketing Workshop', 'Branding and social media ads.', '')">
+           📣 12:00 PM - 2:00 PM | Marketing Workshop
+        </p>
 
-          <div class="project-item" onclick="openProjectModal('ER Diagram', 'er_diagram.webp', ['Illustrates database relationships', 'Defines entities and their attributes', 'Used in database design'])">
-              <img src="er_diagram.webp" alt="ER Diagram">
-              <p>ER Diagram</p>
-          </div>
-      </div>
-  </div>
+        <p class="cursor-pointer text-blue-400 hover:underline"
+           onclick="openModal('SE 101', 'Agile methods in software engineering.', '')">
+           💻 7:30 AM - 12:30 PM | SE 101 Subject
+        </p>
+    </div>
 </div>
-
-</main>
+    
+            <!-- Documents Section -->
+            <div class="bg-gray-800 shadow-lg rounded-lg p-6 flex-1 overflow-y-auto max-h-[calc(100vh-150px)]">
+                <div class="flex justify-between items-center border-b pb-4">
+                    <h3 class="text-lg font-semibold text-blue-400">Documents</h3>
+                    <button class="text-gray-400">↔</button>
+                </div>
+                <div class="mt-4">
+                    <ul class="space-y-2">
+                        <li class="cursor-pointer hover:text-blue-400 px-2 py-1 rounded" onclick="openPDF('se_presentation.pdf', event)">📄 SE Presentation.pdf - 2/24/25</li>
+                        <li class="cursor-pointer hover:text-blue-400 px-2 py-1 rounded" onclick="openPDF('research_paper.pdf', event)">📄 Research Paper.pdf - 2/22/25</li>
+                    </ul>
+                </div>
+            </div>
+    
+            <!-- Projects Section -->
+            <div class="bg-gray-800 shadow-lg rounded-lg p-6 flex-1 overflow-y-auto max-h-[calc(100vh-150px)]">
+                <div class="flex justify-between items-center border-b pb-4">
+                    <h3 class="text-lg font-semibold text-blue-400">Projects</h3>
+                </div>
+                <div class="mt-4 grid grid-cols-2 gap-6">
+                    <div class="project-item bg-white p-4 rounded-lg cursor-pointer hover:shadow-xl transform transition-all" onclick="openProjectModal('Flowchart', 'flowchart.webp', ['Step-by-step diagram', 'Visualizes process flow', 'Used in project planning'])">
+                        <img src="flowchart.webp" alt="Flowchart" class="w-full h-32 object-cover rounded mb-4">
+                        <p class="font-bold text-center">Flowchart</p>
+                    </div>
+    
+                    <div class="project-item bg-white p-4 rounded-lg cursor-pointer hover:shadow-xl transform transition-all" onclick="openProjectModal('Data Flow Diagram', 'dfd.png', ['Represents system data flow', 'Helps in database structuring', 'Essential for software analysis'])">
+                        <img src="dfd.png" alt="DFD" class="w-full h-32 object-cover rounded mb-4">
+                        <p class="font-bold text-center">Data Flow Diagram</p>
+                    </div>
+    
+                    <div class="project-item bg-white p-4 rounded-lg cursor-pointer hover:shadow-xl transform transition-all" onclick="openProjectModal('Gantt Chart', 'gantt_chart.png', ['Used for project scheduling', 'Shows dependencies between tasks', 'Widely used in project management'])">
+                        <img src="gantt_chart.png" alt="Gantt Chart" class="w-full h-32 object-cover rounded mb-4">
+                        <p class="font-bold text-center">Gantt Chart</p>
+                    </div>
+    
+                    <div class="project-item bg-white p-4 rounded-lg cursor-pointer hover:shadow-xl transform transition-all" onclick="openProjectModal('ER Diagram', 'er_diagram.webp', ['Illustrates database relationships', 'Defines entities and their attributes', 'Used in database design'])">
+                        <img src="er_diagram.webp" alt="ER Diagram" class="w-full h-32 object-cover rounded mb-4">
+                        <p class="font-bold text-center">ER Diagram</p>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    
+    </main>
+    
 
 <!-- General Modal -->
 <div id="modal" class="modal">
@@ -514,6 +367,9 @@ window.onclick = function(event) {
     if (event.target === document.getElementById("modal")) closeModal();
     if (event.target === document.getElementById("project-modal")) closeProjectModal();
 };
+
+
+
 </script>
 
 </body>
