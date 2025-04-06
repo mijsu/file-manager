@@ -1,42 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Document</title>
-  <link rel="stylesheet" href="loginstyle.css">
-  <script type="module" src="signup.js" defer>
-    
-  </script>
+  <link rel="stylesheet" href="loginstyle.css" />
+  <style>
+    body {
+      background-color: #11121a;
+    }
+  </style>
 </head>
-<style>
-  body {
-    background-color: #11121a;
-  }
-</style>
-
-<body> 
-<div class="login-box">
-  <p>Login</p>
-  <form>
-    <div id="signInMessage" class="messageDiv" style="display: none;"></div>
-    <div class="user-box">
-      <input name="email" type="text" id="email1" required>
-      <label>Email</label>
-    </div>
-    <div class="user-box">
-      <input name="password" type="password" id="password1" required>
-      <label>Password</label>
-    </div>
-    <a id="submitSignIn" href="#" type="signin">
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      Submit
-    </a>
-  </form>
-  <p>Don't have an account? <a href="signup.html" class="a2">Sign up!</a></p>
-</div>
+<body>
+  <div class="login-box">
+    <p>Login</p>
+    <form onsubmit="return false">
+      <div class="user-box">
+        <input name="email" type="text" id="email1" required />
+        <label>Email</label>
+      </div>
+      <div class="user-box">
+        <input name="password" type="password" id="password1" required />
+        <label>Password</label>
+      </div>
+      <a id="submitSignIn" href="index.html">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        Submit
+      </a>
+    </form>
+    <p>Don't have an account? <a href="signup.html" class="a2">Sign up!</a></p>
+  </div>
 </body>
 </html>
