@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Document</title>
   <link rel="stylesheet" href="loginstyle.css" />
+  <script type="module" src="signup.js" defer></script>
   <style>
     body {
       background-color: #11121a;
@@ -15,6 +16,7 @@
   <div class="login-box">
     <p>Login</p>
     <form onsubmit="return false">
+      <div id="signInMessage" class="messageDiv" style="display: none;"></div>
       <div class="user-box">
         <input name="email" type="text" id="email1" required />
         <label>Email</label>
@@ -23,7 +25,7 @@
         <input name="password" type="password" id="password1" required />
         <label>Password</label>
       </div>
-      <a id="submitSignIn" href="index.html">
+      <a id="submitSignIn" >
         <span></span>
         <span></span>
         <span></span>
